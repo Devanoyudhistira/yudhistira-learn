@@ -2,9 +2,12 @@ import Assignmentlist from "@/app/components/student/assignmentlist";
 import Navbar from "@/app/components/student/navbar";
 import { Inter } from "next/font/google";
 import { Alarm } from "react-bootstrap-icons";
+import supabase from "@/app/supabase/supabase";
+import moment from "moment";
 const inter = Inter({})
 
-export default function Page() {
+export default async function Page() {
+    const { data, error } = await supabase.schema("sekolah").from("assignment").select("*,teacher_id(name)").order("deadline", { ascending: true })
     return (
         <main className={"w-screen h-100 flex flex-col items-center bg-sky-100/20 " + inter.className} >
             <Navbar />
@@ -30,16 +33,16 @@ export default function Page() {
                 <span className="flex items-center gap-2 text-red-600 font-normal" > <Alarm /> dikumpulkan hari ini</span>
             </div>
             <div className="mt-3 px-4 w-[90%] h-max py-6 flex flex-col bg-linear-to-t shadow-xl shadow-blue-600/50 from-blue-600 to-blue-800 rounded-3xl " >
-                <h3 className="text-white w-max  rounded-full text-xs tracking-wider font-medium uppercase p-1.5 bg-gray-50/30" > Matematika </h3>
-                <h1 className="text-3xl mt-1 font-light capitalize text-white" > Mengerjakan halaman 20-21 </h1>
-                <h2 className="text-md font-light text-white  " > Dikumpulkan 1 jam lagi </h2>
+                <h3 className="text-white w-max  rounded-full text-xs tracking-wider font-medium uppercase p-1.5 bg-gray-50/30" > {data[0].subject} </h3>
+                <h1 className="text-3xl mt-1 font-light capitalize text-white" > {data[0].name} </h1>
+                <h2 className="text-md font-light text-white  " > Dikumpulkan {moment(data[0].deadline).locale("id").fromNow(true)} </h2>
             </div>
             <div className="w-full px-4 mt-5" >
                 <h5 className="text-xl font-medium text-gray-800 capitalize" > Upcoming task </h5>
                 <div className="w-full flex flex-col mt-2 items-center gap-4" >
-                    <Assignmentlist tugas={"mengerjakan halaman 21-25 dan soal ipa hal 30"} namaguru={"devano"} mapel={"bahasa indonesia"} />
-                    <Assignmentlist tugas={"mengerjakan halaman 21-25"} namaguru={"devano"} mapel={"bahasa indonesia"} />
-                    <Assignmentlist tugas={"mengerjakan halaman 21-25"} namaguru={"devano"} mapel={"bahasa indonesia"} />
+                    {data.map(e =>
+                        <Assignmentlist key={e.id} tanggal={e.deadline} tugas={e.name} description={e.description} namaguru={e.teacher_id.name} mapel={"b ind"} />
+                    )}
                 </div>
             </div>
         </main>

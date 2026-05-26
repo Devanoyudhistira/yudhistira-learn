@@ -17,7 +17,7 @@ import { Inter } from "next/font/google"
 const inter = Inter({})
 
 export default function Sidebar() {
-    const [opensidebar, setopensidebar] = useState(true)
+    const [opensidebar, setopensidebar] = useState(false)
     return (
         <>
             <div onClick={() => setopensidebar(true)} className="flex flex-col gap-1.5" >

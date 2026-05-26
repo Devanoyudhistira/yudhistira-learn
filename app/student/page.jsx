@@ -9,14 +9,17 @@ import { ClockFill } from "react-bootstrap-icons"
 import { ClockHistory } from "react-bootstrap-icons"
 import Navbar from "../components/student/navbar"
 import Assignmentlist from "../components/student/assignmentlist"
+import supabase from "../supabase/supabase"
 
 const jakarta = Plus_Jakarta_Sans({})
 const inter = Inter({})
 
-export default function Page() {
+export default async function Page() {
+    const { data, error } = await supabase.schema("sekolah").from("assignment").select("*,teacher_id(name)").order("deadline", { ascending: true }).limit(3)
+
     return (
         <main className={`${jakarta.className} flex flex-col items-center pb-8`} >
-            <Navbar/>
+            <Navbar />
             <div className="w-[84%] mt-6 h-96 rounded-2xl bg-blue-500 flex flex-col p-10" >
                 <div className="flex items-center gap-1 text-md" >
                     <ClockFill color="white" />
@@ -39,20 +42,20 @@ export default function Page() {
                     </div>
                 </div>
             </div>
-            <div className={"flex flex-col mt-6 h-max  w-full gap-3 px-4 " + inter.className} >
-                <h1 className="text-xl font-medium text-gray-900" > Recent assignments </h1>
-                <Assignmentlist tugas={"merangkum hal 11-12"}   namaguru={"ahmad"} mapel={"b ind"} />
-                <Assignmentlist tugas={"merangkum hal 11-12"}   namaguru={"devano"} mapel={"mat"} />
-                <Assignmentlist tugas={"merangkum hal 1-12"}   namaguru={"aziz"} mapel={"pkn"} />
+            <div className={"flex flex-col mt-6 h-max items-center w-full gap-3 px-4 " + inter.className} >
+                <h1 className="text-xl self-start font-medium text-gray-900" > Recent assignments </h1>
+                {data.map(e =>
+                    <Assignmentlist key={e.id} tanggal={e.deadline} tugas={e.name} description={e.description} namaguru={e.teacher_id.name} mapel={"b ind"} />
+                )}
             </div>
             <div className="w-full mt-8 px-6 flex-col flex gap-1" >
                 <div className="w-full" >
                     <h1 className="text-3xl font-semibold" > history kehadiran </h1>
-                    <h4 className="text-md font-light" > ringkasan kehadiran anda </h4>                
+                    <h4 className="text-md font-light" > ringkasan kehadiran anda </h4>
                 </div>
 
             </div>
-            <div className="w-full flex flex-wrap items-center justify-evenly gap-4" > 
+            <div className="w-full flex flex-wrap items-center justify-evenly gap-4" >
                 <div className="flex w-max p-4 rounded-3xl border border-gray-200 items-center justify-center gap-14" >
                     <Calendar2X className="text-3xl" color="red" />
                     <div>
@@ -74,7 +77,7 @@ export default function Page() {
                         <h2 className="text-2xl font-bold" > 0 </h2>
                     </div>
                 </div>
-             </div>
+            </div>
 
         </main>
     )
