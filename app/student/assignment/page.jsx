@@ -35,7 +35,7 @@ export default function Page() {
                 <h2 className="text-md font-light text-white  " > Dikumpulkan 1 jam lagi </h2>
             </div>
             <div className="w-full px-4 mt-5" >
-                <h5 className="text-xl font-light text-gray-800 capitalize" > Upcoming task </h5>
+                <h5 className="text-xl font-medium text-gray-800 capitalize" > Upcoming task </h5>
                 <div className="w-full flex flex-col mt-2 items-center gap-4" >
                     <Assignmentlist tugas={"mengerjakan halaman 21-25 dan soal ipa hal 30"} namaguru={"devano"} mapel={"bahasa indonesia"} />
                     <Assignmentlist tugas={"mengerjakan halaman 21-25"} namaguru={"devano"} mapel={"bahasa indonesia"} />
