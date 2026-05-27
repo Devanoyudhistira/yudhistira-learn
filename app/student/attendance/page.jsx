@@ -1,9 +1,12 @@
 import Attendancelist from "@/app/components/student/attendancelist";
 import Navbar from "@/app/components/student/navbar";
+import supabase from "@/app/supabase/supabase";
+import moment from "moment";
 import { Inter } from "next/font/google";
 import { Calendar2 } from "react-bootstrap-icons";
 const poppins = Inter({})
-export default function Page() {
+export default async function Page() {
+    const { data } = await supabase.schema("sekolah").from("attendance").select("*")
     return (
         <main className={"w-screen flex flex-col items-center " + poppins.className} >
             <Navbar />
@@ -35,25 +38,32 @@ export default function Page() {
             </div>
 
             <div className=" mt-4 w-full flex flex-col px-4" >
-                <div className="flex items-center gap-2" >
-                    <h1 className="w-max h-max p-2 bg-sky-200 rounded-full flex items-center justify-center" > <Calendar2 color="blue" className="text-2xl" /> </h1>
-                    <h1 className="text-2xl font-medium" > desember 2026 </h1>
-                </div>
-                <ul className="flex flex-col py-3 gap-4" >
-                    <Attendancelist status={"izin"} />
-                   <Attendancelist status={"izin"} />
-                   <Attendancelist status={"izin"} />
-                </ul>
-                <div className="flex items-center gap-2" >
-                    <h1 className="w-max h-max p-2 bg-sky-200 rounded-full flex items-center justify-center" > <Calendar2 color="blue" className="text-2xl" /> </h1>
-                    <h1 className="text-2xl font-medium" > november 2026 </h1>
-                </div>
-                <ul className="flex flex-col py-3 gap-4" >
-                   <Attendancelist status={"izin"} />
-                   <Attendancelist status={"sakit"} />
-                   <Attendancelist status={"izin"} />
-                </ul>
+                {data.map((e,index) => {
+                    const currentMonth = moment(e.created_at).format("MMM");
+                    const previousMonth = data[index - 1]
+                        ? moment(data[index - 1].created_at).format("MMM")
+                        : null;
+
+                    const showMonth = currentMonth !== previousMonth;
+                    return <>
+                        {showMonth && (
+                            <div className="flex items-center gap-2">
+                                <h1 className="w-max h-max p-2 bg-sky-200 rounded-full flex items-center justify-center">
+                                    <Calendar2 color="blue" className="text-2xl" />
+                                </h1>
+
+                                <h1 className="text-2xl font-medium">
+                                    {currentMonth} 2026
+                                </h1>
+                            </div>
+                        )}
+                        <ul key={e.id} className="flex flex-col py-3 gap-4" >
+                            <Attendancelist status={e.category} alasan={e.excuses} tanggal={moment(e.created_at).locale("ID").format("dddd MMM, YYYY")} />
+                        </ul>
+                    </>
+                })}
             </div>
+
 
         </main>
     )

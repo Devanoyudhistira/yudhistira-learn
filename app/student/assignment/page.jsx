@@ -35,7 +35,7 @@ export default async function Page() {
             <div className="mt-3 px-4 w-[90%] h-max py-6 flex flex-col bg-linear-to-t shadow-xl shadow-blue-600/50 from-blue-600 to-blue-800 rounded-3xl " >
                 <h3 className="text-white w-max  rounded-full text-xs tracking-wider font-medium uppercase p-1.5 bg-gray-50/30" > {data[0].subject} </h3>
                 <h1 className="text-3xl mt-1 font-light capitalize text-white" > {data[0].name} </h1>
-                <h2 className="text-md font-light text-white  " > Dikumpulkan {moment(data[0].deadline).locale("id").fromNow(true)} </h2>
+                <h2 className="text-md font-light text-white  " > Dikumpulkan {moment(data[0].deadline).locale("id").fromNow(true)} lagi </h2>
             </div>
             <div className="w-full px-4 mt-5" >
                 <h5 className="text-xl font-medium text-gray-800 capitalize" > Upcoming task </h5>
