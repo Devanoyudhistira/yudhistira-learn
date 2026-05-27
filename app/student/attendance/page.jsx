@@ -58,7 +58,7 @@ export default async function Page() {
                             </div>
                         )}
                         <ul key={e.id} className="flex flex-col py-3 gap-4" >
-                            <Attendancelist status={e.category} alasan={e.excuses} tanggal={moment(e.created_at).locale("ID").format("dddd MMM, YYYY")} />
+                            <Attendancelist status={e.category} alasan={e.excuses} tanggal={moment(e.created_at).locale("ID").format("dddd DD MMM, YYYY")} />
                         </ul>
                     </>
                 })}
