@@ -1,6 +1,5 @@
 import Sidebar from "./sidebar";
-
-export default function Navbar(){
+export default async function Navbar(){    
     return (
         <nav className="w-full relative h-15 px-2 py-3 bg-sky-50/20 border border-gray-400 shadow-2xs shadow-black/10 flex items-center justify-between" >
             <Sidebar/>
