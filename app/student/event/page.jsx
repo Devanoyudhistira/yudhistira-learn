@@ -3,9 +3,13 @@ import { Inter } from "next/font/google";
 import { CircleFill } from "react-bootstrap-icons";
 import Image from "next/image";
 import Eventcard from "@/app/components/student/eventcard";
+import supabase from "@/app/supabase/supabase";
 const inter = Inter({})
 
 export default async function Page() {
+    const {data} = await supabase.schema("sekolah").from("event").select("*")
+    console.log(data)
+
     return <main className={" " + inter.className} >
         <Navbar />
         <div className="w-full px-4 py-2" >
@@ -18,9 +22,9 @@ export default async function Page() {
         <div className="w-full px-2 py-1.5 flex flex-col gap-1" >
             <h1 className="text-xl font-medium capitalize" > Event yang akan datang </h1>
             <div className="flex flex-col gap-3" >
-                <Eventcard />
-                <Eventcard />
-                <Eventcard />
+                {data.map( e=>
+                <Eventcard key={e.id} date={e.event_start} eventname={e.name} />                
+                )}
             </div>
         </div>
     </main>
