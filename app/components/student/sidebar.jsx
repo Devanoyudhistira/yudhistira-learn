@@ -43,7 +43,7 @@ export default function Sidebar({urlname}) {
                                     <Sidebaritem urlname={"attendance"} pathname={pathname} urlpath={"/student/attendance"} Icon={<PersonCheck className={`text-3xl`} />} />
                                     <Sidebaritem urlname={"assignment"} pathname={pathname} urlpath={"/student/assignment"} Icon={<Pass className={`text-3xl`} />} />
                                     <Sidebaritem urlname={"schedule"} pathname={pathname} urlpath={"/student/schedule"} Icon={<Calendar3 className={`text-3xl`} />} />
-                                    <Sidebaritem urlname={"events"} pathname={pathname} urlpath={"/student/events"} Icon={<Calendar2 className={`text-3xl`} />} />                                  
+                                    <Sidebaritem urlname={"event"} pathname={pathname} urlpath={"/student/event"} Icon={<Calendar2 className={`text-3xl`} />} />                                  
                                 </div>
                             </div>
                             <div className="w-full text-2xl px-6 text-red-600 h-20 border-t border-gray-400 flex gap-3 items-center " >

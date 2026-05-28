@@ -8,8 +8,7 @@ const inter = Inter({})
 
 export default async function Schedule() {
 
-    const {data,error} = await supabase.schema("sekolah").from("schedule").select("*,teacher(name)").order("time_start",{ascending:true})    
-    console.log(data)
+    const { data, error } = await supabase.schema("sekolah").from("schedule").select("*,teacher(name)").order("time_start", { ascending: true })
     return (
         <main className={"flex w-screen flex-col gap-2 " + inter.className} >
             <Navbar />
