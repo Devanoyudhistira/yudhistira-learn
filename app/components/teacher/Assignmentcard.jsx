@@ -44,14 +44,14 @@ export default function Assignmentcard() {
                     <CheckCircle size={25} color="green" />
                     <div className="text-xl font-semibold" >
                         <h1> selesai  </h1>
-                        <h2 className="-mt-1.5" >7</h2>
+                        <h2 className="-mt-1.5" >20</h2>
                     </div>
                 </div>
                 <div className="w-full h-17 bg-zinc-100 gap-2 border-2 rounded-2xl border-zinc-800 flex justify-center items-center" >
                     <ExclamationDiamond size={23} color="red" />
                     <div className="text-xl font-semibold" >
                         <h1> belum selesai  </h1>
-                        <h2 className="-mt-1.5" >4</h2>
+                        <h2 className="-mt-1.5" >10</h2>
                     </div>
                 </div>
             </div>
