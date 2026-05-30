@@ -10,13 +10,13 @@ import { ClockHistory } from "react-bootstrap-icons"
 import Navbar from "../components/student/navbar"
 import Assignmentlist from "../components/student/assignmentlist"
 import supabase from "../supabase/supabase"
+import { createClient } from "../supabase/server"
 
 const jakarta = Plus_Jakarta_Sans({})
 const inter = Inter({})
 
 export default async function Page() {
-    const { data, error } = await supabase.schema("sekolah").from("assignment").select("*,teacher_id(name)").order("deadline", { ascending: true }).limit(3)
-
+    const { data, error } = await supabase.schema("sekolah").from("assignment").select("*,teacher_id(name)").order("deadline", { ascending: true }).limit(3)        
     return (
         <main className={`${jakarta.className} flex flex-col items-center pb-8`} >
             <Navbar />
