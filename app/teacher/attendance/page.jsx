@@ -1,4 +1,4 @@
-import Navbar from "@/app/components/student/navbar";
+import Navbar from "@/app/components/teacher/navbar";
 import Attendancecard from "@/app/components/teacher/attendancecard";
 import moment from "moment";
 import { Plus_Jakarta_Sans } from "next/font/google";
