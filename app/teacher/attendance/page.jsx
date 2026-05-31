@@ -4,8 +4,11 @@ import moment from "moment";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Calendar2 } from "react-bootstrap-icons";
 const jakarta = Plus_Jakarta_Sans({})
+import supabase from "@/app/supabase/supabase";
 
-export default function Page() {
+export default async function Page() {
+
+    const { data: semuasiswa } = await supabase.schema("sekolah").from("students").select("*,attendance_id(*)").eq("class", 1)        
     return (
         <main className="w-screen flex flex-col" >
             <Navbar />
@@ -28,10 +31,9 @@ export default function Page() {
                 </div>
             </div>
             <div className="w-full mt-3 flex flex-col gap-2 items-center px-1.5" >
-                <Attendancecard/>
-                <Attendancecard/>
-                <Attendancecard/>
-                <Attendancecard/>
+                {semuasiswa.map((e,i) => 
+                    <Attendancecard key={e.id} studentname={e.name} studenid={e.student_id} status={e.attendance_id} />
+                )}
             </div>
         </main>
     )
