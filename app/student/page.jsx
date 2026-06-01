@@ -12,13 +12,17 @@ import Assignmentlist from "../components/student/assignmentlist"
 import supabase from "../supabase/supabase"
 import { createClient } from "../supabase/server"
 import moment from "moment"
+import { studentdata } from "../lib/user"
 
 const jakarta = Plus_Jakarta_Sans({})
 const inter = Inter({})
 
 export default async function Page() {
-    const { data, error } = await supabase.schema("sekolah").from("assignment").select("*,teacher_id(name)").order("deadline", { ascending: true }).limit(3)        
+    const studentdatalo = await studentdata()
+    const { data, error } = await supabase.schema("sekolah").from("assignment").select("*,teacher_id(name)").order("deadline", { ascending: true }).limit(3)
+    const {data:attandance,error:attandanceerror} = await supabase.schema("sekolah").from("attendance").select("*").eq("student_id",studentdatalo.id)
     const datedeadline = data.filter(e => moment(e.deadline).diff(moment(), "days") !== 0 )     
+    console.log(await attandance)
     return (
         <main className={`${jakarta.className} flex flex-col items-center pb-8`} >
             <Navbar />
@@ -54,21 +58,21 @@ export default async function Page() {
                     <Calendar2X className="text-3xl" color="red" />
                     <div>
                         <h4 className="text-xl font-medium" > alfa </h4>
-                        <h2 className="text-2xl font-bold" > 12 </h2>
+                        <h2 className="text-2xl font-bold" > {attandance.filter(e => e.category === "bolos").length } </h2>
                     </div>
                 </div>
                 <div className="flex w-max p-4 rounded-3xl border border-gray-200 items-center justify-center gap-14" >
                     <Hospital className="text-3xl" color="green" />
                     <div>
                         <h4 className="text-xl font-medium" > sakit </h4>
-                        <h2 className="text-2xl font-bold" > 8 </h2>
+                        <h2 className="text-2xl font-bold" > {attandance.filter(e => e.category === "sakit").length } </h2>
                     </div>
                 </div>
                 <div className="flex w-max p-4 rounded-3xl border border-gray-200 items-center justify-center gap-14" >
                     <Envelope className="text-3xl" color="yellow" />
                     <div>
                         <h4 className="text-xl font-medium" > izin </h4>
-                        <h2 className="text-2xl font-bold" > 0 </h2>
+                        <h2 className="text-2xl font-bold" > {attandance.filter(e => e.category === "izin").length } </h2>
                     </div>
                 </div>
             </div>
