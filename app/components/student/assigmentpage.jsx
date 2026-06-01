@@ -4,6 +4,7 @@ import Assignmentlist from "./assignmentlist"
 import { Alarm } from "react-bootstrap-icons"
 import moment from "moment"
 export default function Assignmentpage({ data }) {
+    console.log(data)
     const [filterstatus, setfilterstatus] = useState("all")    
     return <>
         <div className="flex items-center justify-evenly mt-5 gap-4 w-full px-6" >
@@ -36,7 +37,7 @@ export default function Assignmentpage({ data }) {
             <h5 className="text-xl font-medium text-gray-800 capitalize" > Upcoming task </h5>
             <div className="w-full flex flex-col mt-2 items-center gap-4">
                 {data.filter((e) => {
-                    if (moment(e.deadline).diff(moment(), "day") !== 0 ) return true
+                    if (moment(e.deadline).isAfter(moment()) ) return true
                 })
                     .filter((e) => {
                         if (filterstatus === "all") return true
@@ -52,6 +53,7 @@ export default function Assignmentpage({ data }) {
                             namaguru={e.teacher_id.name}
                             mapel={e.subject}
                             taskstatus="active"
+                            id={e.id}
                         />
                     ))}
             </div>
@@ -73,6 +75,7 @@ export default function Assignmentpage({ data }) {
                             namaguru={e.teacher_id.name}
                             mapel="b ind"
                             taskstatus="done"
+                            id={e.id}
                         />
                     ))}
             </div>
