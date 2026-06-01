@@ -5,10 +5,12 @@ import { Alarm } from "react-bootstrap-icons";
 import supabase from "@/app/supabase/supabase";
 import moment from "moment";
 import Assignmentpage from "@/app/components/student/assigmentpage";
+import { studentdata } from "@/app/lib/user";
 const inter = Inter({})
 
 export default async function Page() {
-    const { data, error } = await supabase.schema("sekolah").from("assignment").select("*,teacher_id(name)").order("deadline", { ascending: true })    
+    const student = await studentdata()
+    const { data, error } = await supabase.schema("sekolah").from("assignment").select("*,teacher_id(name)").eq("class",student.class).order("deadline", { ascending: true })    
     return (
         <main className={"w-screen h-100 flex flex-col items-center bg-sky-100/20 " + inter.className} >
             <Navbar />
