@@ -36,7 +36,7 @@ export default function Assignmentpage({ data }) {
             <h5 className="text-xl font-medium text-gray-800 capitalize" > Upcoming task </h5>
             <div className="w-full flex flex-col mt-2 items-center gap-4">
                 {data.filter((e) => {
-                    if (moment(e.deadline).diff(moment(), "days") !== 0 ) return true
+                    if (moment(e.deadline).diff(moment(), "day") !== 0 ) return true
                 })
                     .filter((e) => {
                         if (filterstatus === "all") return true
@@ -61,7 +61,7 @@ export default function Assignmentpage({ data }) {
             <div className="w-full flex flex-col mt-2 items-center gap-3" >
                 {data
                     .filter((e) => {
-                        if (moment(e.deadline).diff(moment(), "days") === 0 ) return true
+                        if (moment(e.deadline).diff(moment(), "day") === 0 ) return true
                     })
                     .map((e) => (
                         <Assignmentlist
