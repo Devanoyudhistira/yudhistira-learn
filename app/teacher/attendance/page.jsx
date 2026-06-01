@@ -8,7 +8,7 @@ import supabase from "@/app/supabase/supabase";
 
 export default async function Page() {
 
-    const { data: semuasiswa } = await supabase.schema("sekolah").from("students").select("*,attendance_id(*)").eq("class", 1)        
+    const { data: semuasiswa } = await supabase.schema("sekolah").from("students").select("*,attendance_id(*)").eq("class", 6)        
     return (
         <main className="w-screen flex flex-col" >
             <Navbar />
@@ -16,17 +16,17 @@ export default async function Page() {
                 <h5 className="text-xl font-semibold text-blue-500 uppercase " > Daftar kehadiran </h5>
                 <div className="w-full flex items-center justify-between" >
                     <h1 className="text-2xl font-bold " > Tkj-a </h1>
-                    <h2 className="text-xl font-medium bg-gray-300 px-2 py-1 rounded-full" > 34 murid </h2>
+                    <h2 className="text-xl font-medium bg-gray-300 px-2 py-1 rounded-full" > {semuasiswa.length} murid </h2>
                 </div>
                 <h3 className=" text-xl font-normal tracking-wide flex items-center gap-2" > <Calendar2 /> {moment().locale("ID").format("MMM h,YYYY")} </h3>
             </div>
             <div className="w-full justify-between gap-2 px-3 flex items-center" >
                 <div className="w-1/2 h-24 bg-emerald-100 rounded-2xl border-2 border-green-500 text-green-600 flex flex-col items-center justify-center " >
-                    <h1 className="text-2xl font-bold" > 30 </h1>
+                    <h1 className="text-2xl font-bold" > {semuasiswa.filter(e => e.attendance_id !== null).length} </h1>
                     <h2 className="text-xl font-semibold" > masuk</h2>
                 </div>
                 <div className="w-1/2 h-24 bg-red-100 border-2 rounded-2xl border-red-500 text-red-600 flex flex-col items-center justify-center " >
-                    <h1 className="text-2xl font-bold" > 4 </h1>
+                    <h1 className="text-2xl font-bold" > {semuasiswa.filter(e => e.attendance_id !== null).length} </h1>
                     <h2 className="text-xl font-semibold" > absen</h2>
                 </div>
             </div>

@@ -4,9 +4,10 @@ import { ChevronRight } from "react-bootstrap-icons"
 import { Stopwatch } from "react-bootstrap-icons"
 
 export default function Assignmentlist({ tugas, namaguru, mapel, description, tanggal, status, taskstatus }) {
+    const deadline = moment(tanggal).diff(moment(), "days")
     return (<div className="w-[83%] h-60 flex flex-col gap-3  justify-start items-start px-4 py-2 shadow-md shadow-black/10 rounded-2xl" >
         <div className="w-full flex  justify-between items-center" >
-            {taskstatus === "active" ? <div className="text-yellow-600 text-4xl bg-yellow-100 rounded-2xl p-3 flex items-center justify-center " > <Stopwatch />
+            {deadline !== 0 ? <div className="text-yellow-600 text-4xl bg-yellow-100 rounded-2xl p-3 flex items-center justify-center " > <Stopwatch />
             </div> : <div className="text-gray-500 text-4xl bg-gray-100 rounded-2xl p-3 flex items-center justify-center " > <Stopwatch />
             </div>}
             <div className="flex flex-col text-right gap-2" >

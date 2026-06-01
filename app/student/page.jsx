@@ -11,12 +11,14 @@ import Navbar from "../components/student/navbar"
 import Assignmentlist from "../components/student/assignmentlist"
 import supabase from "../supabase/supabase"
 import { createClient } from "../supabase/server"
+import moment from "moment"
 
 const jakarta = Plus_Jakarta_Sans({})
 const inter = Inter({})
 
 export default async function Page() {
     const { data, error } = await supabase.schema("sekolah").from("assignment").select("*,teacher_id(name)").order("deadline", { ascending: true }).limit(3)        
+    const datedeadline = data.filter(e => moment(e.deadline).diff(moment(), "days") !== 0 )     
     return (
         <main className={`${jakarta.className} flex flex-col items-center pb-8`} >
             <Navbar />
@@ -25,21 +27,13 @@ export default async function Page() {
                     <ClockFill color="white" />
                     <h4 className=" font-medium text-white capitalize" > priority deadline </h4>
                 </div>
-                <h1 className="text-5xl font-semibold tracking-wide text-zinc-50" >Ujian tengah semester</h1>
-                <h3 className="text-xl font-medium text-zinc-50 capitalize " > Matematika | pak Devano </h3>
-                <div className="flex w-full mt-4 h-max justify-evenly shrink py-2 self-center mr-14 gap-8 ">
-                    <div className="w-20 h-22 shrink-0  rounded-2xl bg-zinc-200/50 flex flex-col items-center justify-center" >
-                        <h6 className="text-3xl font-medium text-zinc-50" > 06 </h6>
+                <h1 className="text-5xl font-semibold tracking-wide text-zinc-50" > {datedeadline[0].name} </h1>
+                <h3 className="text-xl font-medium text-zinc-50 capitalize " > {datedeadline[0].subject} |  {datedeadline[0].teacher_id.name} </h3>
+                <div className="flex w-full mt-4 h-max  justify-center items-center shrink py-2 self-center mr-14 gap-8 ">
+                    <div className="w-full h-22 ml-13 shrink-0 self-center rounded-2xl bg-zinc-200/50 flex flex-col items-center justify-center" >
+                        <h6 className="text-3xl font-medium text-zinc-50" > { moment(datedeadline[0].deadline).diff(moment(), "days")} </h6>
                         <h6 className="text-xl font-bold text-zinc-50" >  Days </h6>
-                    </div>
-                    <div className="w-23 h-22 shrink-0 p-1 rounded-2xl bg-zinc-200/50 flex flex-col items-center justify-center" >
-                        <h6 className="text-3xl font-medium text-zinc-50" > 12 </h6>
-                        <h6 className="text-xl font-bold text-zinc-50" >  Hours </h6>
-                    </div>
-                    <div className="w-23 h-22 shrink-0 p-1 rounded-2xl bg-zinc-200/50 flex flex-col items-center justify-center" >
-                        <h6 className="text-3xl font-medium text-zinc-50" > 30 </h6>
-                        <h6 className="text-xl font-bold text-zinc-50" >  Minute </h6>
-                    </div>
+                    </div>                   
                 </div>
             </div>
             <div className={"flex flex-col mt-6 h-max items-center w-full gap-3 px-4 " + inter.className} >

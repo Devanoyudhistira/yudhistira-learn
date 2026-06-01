@@ -5,13 +5,13 @@ export default function Attendancelist({ status, alasan, tanggal }) {
         if (status === "bolos") {
             return { bg: "bg-red-200", writing: "text-red-800", iconcolor: "text-red-300" }
         }
-        else if (status === "izin") {
+        else if (status === "sakit") {
             return { bg: "bg-emerald-200", writing: "text-green-800", iconcolor: "text-emerald-300" }
         }
         return {
-            bg: "bg-gray-200",
-            writing: "text-gray-800",
-            iconcolor: "text-gray-300"
+            bg: "bg-yellow-200",
+            writing: "text-yellow-800",
+            iconcolor: "text-yellow-300"
         }
     }
     return (

@@ -7,7 +7,9 @@ import { People } from "react-bootstrap-icons";
 import { Calendar } from "react-bootstrap-icons";
 import { BookHalf } from "react-bootstrap-icons";
 
-export default function Assignmentcard({subject,title,deadline,assignmentclass,expectation,alreadysubmit}) {
+export default function Assignmentcard({subject,title,deadline,assignmentclass,expectation,alreadysubmit}) {    
+    console.log(expectation)
+    const percentage = Number(((alreadysubmit / expectation) * 100).toFixed(2))
     return (
         <div className="w-full h-max py-3 shadow-md bg-zinc-50 overflow-hidden shadow-black/50 px-2.5 rounded-2xl" >
             <div className="w-full mt-3 flex justify-between items-center">
@@ -33,10 +35,10 @@ export default function Assignmentcard({subject,title,deadline,assignmentclass,e
             <div className="w-full mt-2" >
                 <div className="w-full flex text-md justify-between " >
                     <h4 > Submission </h4>
-                    <h4 className="text-blue-700 font-semibold" > {alreadysubmit} /{expectation} (80%) </h4>
+                    <h4 className="text-blue-700 font-semibold" > {alreadysubmit} /{expectation} {percentage}% </h4>
                 </div>
                 <div className="w-full mt-1 bg-zinc-100 h-3 flex items-center rounded-2xl overflow-hidden" >
-                    <div className="w-[80%] h-full bg-blue-700" ></div>
+                    <div  style={{ width: `${percentage}%` }} className={` h-full bg-blue-700`} ></div>
                 </div>
             </div>
             <div className="w-full flex gap-2 mt-3 items-center justify-between">
