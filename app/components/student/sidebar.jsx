@@ -16,6 +16,7 @@ import { Inter } from "next/font/google"
 import Link from "next/link"
 import { usePathname } from 'next/navigation'
 import Sidebaritem from "./sidebaritem"
+import { logout } from "@/app/action/auth"
 
 const inter = Inter({})
 
@@ -46,10 +47,10 @@ export default function Sidebar({urlname}) {
                                     <Sidebaritem urlname={"event"} pathname={pathname} urlpath={"/student/event"} Icon={<Calendar2 className={`text-3xl`} />} />                                  
                                 </div>
                             </div>
-                            <div className="w-full text-2xl px-6 text-red-600 h-20 border-t border-gray-400 flex gap-3 items-center " >
+                            <form action={logout} className="w-full text-2xl px-6 text-red-600 h-20 border-t border-gray-400 flex gap-3 items-center " >
                                 <BoxArrowRight />
-                                <h1 className=" font-light capitalize " > Sign Out </h1>
-                            </div>
+                                <button type="submit" className=" font-light capitalize " > Sign Out </button>
+                            </form>
                         </motion.div>
                     </aside>}
             </AnimatePresence>

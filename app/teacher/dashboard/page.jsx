@@ -1,9 +1,10 @@
 import Dashboardcard from "@/app/components/teacher/dashboardcard";
 import Navbar from "@/app/components/teacher/navbar";
+import supabase from "@/app/supabase/supabase";
 import { Inter } from "next/font/google";
 import { Search } from "react-bootstrap-icons";
 const inter = Inter({})
-export default function Page() {
+export default async function Page() {    
     return (
         <main className={`${inter.className}`} >
             <Navbar />

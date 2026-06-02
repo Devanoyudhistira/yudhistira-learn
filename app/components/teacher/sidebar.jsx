@@ -17,12 +17,13 @@ import Link from "next/link"
 import { usePathname } from 'next/navigation'
 import Sidebaritem from "@/app/components/student/sidebaritem"
 import { Table } from "react-bootstrap-icons"
+import { logout } from "@/app/action/auth"
 
 const inter = Inter({})
 
-export default function Sidebar({urlname}) {
+export default function Sidebar({ urlname }) {
     const [opensidebar, setopensidebar] = useState(false)
-    const pathname = usePathname().split("/").at(-1)     
+    const pathname = usePathname().split("/").at(-1)
     return (
         <>
             <div onClick={() => setopensidebar(true)} className="flex flex-col gap-1.5" >
@@ -46,10 +47,10 @@ export default function Sidebar({urlname}) {
                                     <Sidebaritem urlname={"dashboard"} pathname={pathname} urlpath={"/teacher/dashboard"} Icon={<Table className={`text-3xl`} />} />
                                 </div>
                             </div>
-                            <div className="w-full text-2xl px-6 text-red-600 h-20 border-t border-gray-400 flex gap-3 items-center " >
+                            <form action={logout} className="w-full text-2xl px-6 text-red-600 h-20 border-t border-gray-400 flex gap-3 items-center " >
                                 <BoxArrowRight />
-                                <h1 className=" font-light capitalize " > Sign Out </h1>
-                            </div>
+                                <button type="submit" className=" font-light capitalize " > Sign Out </button>
+                            </form>
                         </motion.div>
                     </aside>}
             </AnimatePresence>

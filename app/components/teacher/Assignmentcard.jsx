@@ -1,4 +1,5 @@
 import moment from "moment";
+import Link from "next/link";
 import { CheckCircle } from "react-bootstrap-icons";
 import { ArrowLeft } from "react-bootstrap-icons";
 import { ArrowRight } from "react-bootstrap-icons";
@@ -7,7 +8,7 @@ import { People } from "react-bootstrap-icons";
 import { Calendar } from "react-bootstrap-icons";
 import { BookHalf } from "react-bootstrap-icons";
 
-export default function Assignmentcard({subject,title,deadline,assignmentclass,expectation,alreadysubmit}) {    
+export default function Assignmentcard({subject,title,deadline,assignmentclass,expectation,alreadysubmit,id}) {    
     console.log(expectation)
     const percentage = Number(((alreadysubmit / expectation) * 100).toFixed(2))
     return (
@@ -57,9 +58,9 @@ export default function Assignmentcard({subject,title,deadline,assignmentclass,e
                     </div>
                 </div>
             </div>
-            <button className="w-full mt-3 flex items-center text-xl justify-center bg-blue-700 shadow-xl shadow-blue-900/30 py-3 font-semibold text-white gap-1.5 rounded-full" > 
+            <Link href={`/teacher/assignment/${id}`} className="w-full mt-3 flex items-center text-xl justify-center bg-blue-700 shadow-xl shadow-blue-900/30 py-3 font-semibold text-white gap-1.5 rounded-full" > 
                 Lihat tugas <ArrowRight className="mt-1.5" />
-             </button>
+             </Link>
         </div>
     )
 }

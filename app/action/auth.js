@@ -26,3 +26,10 @@ export async function login(formdata) {
 
   redirect("/student");
 }
+
+export async function logout(){
+  const supabaseauth = await createClient();
+  const {error} = await supabaseauth.auth.signOut()
+  console.log(error)
+  redirect("/login")
+}

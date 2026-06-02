@@ -19,7 +19,7 @@ export default async function Page() {
             <h1 className="text-4xl font-semibold px-2 tracking-wide capitalize" > manage assignments </h1>
             <div className="flex flex-col gap-4 w-full py-3 px-2" >
                 {data.map(e => 
-                <Assignmentcard key={e.id} subject={e.subject} title={e.name}  deadline={e.deadline} alreadysubmit={completed.length} expectation={e.submission_target} assignmentclass={e["class"]["class"] } />
+                <Assignmentcard key={e.id} id={e.id} subject={e.subject} title={e.name}  deadline={e.deadline} alreadysubmit={completed.length} expectation={e.submission_target} assignmentclass={e["class"]["class"] } />
                 )}
             </div>
         </div>
