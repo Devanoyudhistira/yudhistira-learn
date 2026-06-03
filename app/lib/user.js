@@ -6,3 +6,9 @@ export async function studentdata(){
     const { data: user, error: usererror } = await supabase.schema("sekolah").from("students").select("*").eq("email", id.user.id).single()    
     return user
 }
+export async function teacherdata(){
+    const supabaseauth = await createClient()    
+    const { data: id } = await supabaseauth.auth.getUser()    
+    const { data: user, error: usererror } = await supabase.schema("sekolah").from("teacher").select("*").eq("email", id.user.id).single()    
+    return user
+}
