@@ -20,26 +20,29 @@ const inter = Inter({})
 export default async function Page() {
     const studentdatalo = await studentdata()
     const { data, error } = await supabase.schema("sekolah").from("assignment").select("*,teacher_id(name)").order("deadline", { ascending: true }).limit(3)
-    const {data:attandance,error:attandanceerror} = await supabase.schema("sekolah").from("attendance").select("*").eq("student_id",studentdatalo.id)
-    const datedeadline = data.filter(e => moment(e.deadline).isSame(moment().add(1, "day"), "day") ) 
+    const { data: attandance, error: attandanceerror } = await supabase.schema("sekolah").from("attendance").select("*").eq("student_id", studentdatalo.id)
+    const datedeadline = data.filter(e => moment(e.deadline).isSame(moment().add(1, "day"), "day"))
 
-    console.log( datedeadline)
+    console.log(datedeadline)
     return (
         <main className={`${jakarta.className} flex flex-col items-center pb-8`} >
             <Navbar />
             <div className="w-[84%] mt-6 h-96 rounded-2xl bg-blue-500 flex flex-col p-10" >
-                <div className="flex items-center gap-1 text-md" >
+                {datedeadline[0]?.name && <div className="flex items-center gap-1 text-md" >
                     <ClockFill color="white" />
                     <h4 className=" font-medium text-white capitalize" > priority deadline </h4>
-                </div>
-                <h1 className="text-5xl font-semibold tracking-wide text-zinc-50" > {datedeadline[0]?.name} </h1>
-                <h3 className="text-xl font-medium text-zinc-50 capitalize " > {datedeadline[0]?.subject} |  {datedeadline[0]?.teacher_id.name} </h3>
-                <div className="flex w-full mt-4 h-max  justify-center items-center shrink py-2 self-center mr-14 gap-8 ">
-                    <div className="w-full h-22 ml-13 shrink-0 self-center rounded-2xl bg-zinc-200/50 flex flex-col items-center justify-center" >
-                        <h6 className="text-3xl font-medium text-zinc-50" > { moment(datedeadline[0]?.deadline).diff(moment(), "days")} </h6>
-                        <h6 className="text-xl font-bold text-zinc-50" >  Days </h6>
-                    </div>                   
-                </div>
+                </div>}
+                {datedeadline[0]?.name ?
+                    <>
+                        <h1 className="text-5xl font-semibold tracking-wide text-zinc-50" > {datedeadline[0]?.name} </h1>
+                        <h3 className="text-xl font-medium text-zinc-50 capitalize " > {datedeadline[0]?.subject} |  {datedeadline[0]?.teacher_id.name} </h3>
+                        <div className="flex w-full mt-4 h-max  justify-center items-center shrink py-2 self-center mr-14 gap-8 ">
+                            <div className="w-full h-22 ml-13 shrink-0 self-center rounded-2xl bg-zinc-200/50 flex flex-col items-center justify-center" >
+                                <h6 className="text-3xl font-medium text-zinc-50" > {moment(datedeadline[0]?.deadline).diff(moment(), "days")} </h6>
+                                <h6 className="text-xl font-bold text-zinc-50" >  Days </h6>
+                            </div>
+                        </div>
+                    </> : <div className="self-center justify-self-center mt-40 text-3xl" > nothing right now </div>}
             </div>
             <div className={"flex flex-col mt-6 h-max items-center w-full gap-3 px-4 " + inter.className} >
                 <h1 className="text-xl self-start font-medium text-gray-900" > Recent assignments </h1>
@@ -59,21 +62,21 @@ export default async function Page() {
                     <Calendar2X className="text-3xl" color="red" />
                     <div>
                         <h4 className="text-xl font-medium" > alfa </h4>
-                        <h2 className="text-2xl font-bold" > {attandance.filter(e => e.category === "bolos").length } </h2>
+                        <h2 className="text-2xl font-bold" > {attandance.filter(e => e.category === "bolos").length} </h2>
                     </div>
                 </div>
                 <div className="flex w-max p-4 rounded-3xl border border-gray-200 items-center justify-center gap-14" >
                     <Hospital className="text-3xl" color="green" />
                     <div>
                         <h4 className="text-xl font-medium" > sakit </h4>
-                        <h2 className="text-2xl font-bold" > {attandance.filter(e => e.category === "sakit").length } </h2>
+                        <h2 className="text-2xl font-bold" > {attandance.filter(e => e.category === "sakit").length} </h2>
                     </div>
                 </div>
                 <div className="flex w-max p-4 rounded-3xl border border-gray-200 items-center justify-center gap-14" >
                     <Envelope className="text-3xl" color="yellow" />
                     <div>
                         <h4 className="text-xl font-medium" > izin </h4>
-                        <h2 className="text-2xl font-bold" > {attandance.filter(e => e.category === "izin").length } </h2>
+                        <h2 className="text-2xl font-bold" > {attandance.filter(e => e.category === "izin").length} </h2>
                     </div>
                 </div>
             </div>

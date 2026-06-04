@@ -3,3 +3,7 @@
 input{
     @apply ring-0 outline-0 
 }
+
+textarea{
+    @apply ring-0 outline-0 
+}

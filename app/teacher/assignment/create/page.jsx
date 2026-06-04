@@ -5,18 +5,14 @@ import { FileEarmarkArrowUp } from "react-bootstrap-icons";
 import { ArrowLeft } from "react-bootstrap-icons";
 import supabase from "@/app/supabase/supabase";
 import { teacherdata } from "@/app/lib/user";
+import Formnav from "@/app/components/formnav";
 const inter = Inter({})
 export default async function Page() {
     const teacher = await teacherdata()
     const { data, error } = await supabase.schema("sekolah").from("class").select("id,class").order("class", { ascending: true })
     return (
         <main className={"w-screen " + inter.className} >
-            <nav className="w-full h-14 bg-zinc-100 shadow-md shadow-black/20 flex items-center" >
-                <div className="flex justify-center text-blue-600 px-2 items-center gap-2 text-xl" >
-                    <ArrowLeft className="text-2xl" />
-                    <span className="capitalize font-medium" > tugas baru </span>
-                </div>
-            </nav>
+           <Formnav target={"/teacher/assignment"} pagename={"tugas baru"} />
             <form encType="multipart/form-data" action={addassignment} className="flex flex-col gap-3 w-full pb-7 px-3 py-2 mt-3" >
                 <label htmlFor="name" className="text-xl font-semibold w-full flex flex-col capitalize gap-1 " >
                     <h1> Nama Tugas </h1>
