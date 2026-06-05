@@ -13,12 +13,17 @@ export async function login(formdata) {
     password: password,
   });
   console.log(error);
+  console.log(data);
+
+  if(error){
+    redirect("/login")
+  }
 
   const { data: user, error: usererror } = await supabase
     .schema("sekolah")
     .from("teacher")
     .select("name")
-    .eq("email", data.user.id)
+    .eq("email", data.user?.id)
     .single();
   if (user?.name) {
     redirect("/teacher");

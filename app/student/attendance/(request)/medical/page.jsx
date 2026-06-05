@@ -1,3 +1,6 @@
+
+
+import { medicalrequest } from "@/app/action/student/attendancestudent";
 import Formnav from "@/app/components/formnav";
 import Medicalform from "@/app/components/student/medicalform";
 import { Inter } from "next/font/google";
@@ -16,7 +19,7 @@ export default async function Medicalrequest() {
                 <h1 className="text-3xl font-semibold" > Kirimkan surat anda disini </h1>
                 <p className="text-[18px] font-normal text-gray-600 w-80" > ingat untuk selalu lampirkan surat keterangan dari dokter sebagai bukti </p>
             </div>
-            <Medicalform/>
+            <Medicalform actionform={medicalrequest} />
         </main>
     )
 }

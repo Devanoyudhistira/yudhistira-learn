@@ -11,7 +11,8 @@ export async function addassignment(formdata) {
   const description = formdata.get("description");
   const schoolclass = formdata.get("class");
   const image = formdata.getAll("image");
-  const namesfile = image.map((file) => `school/${file.name}`);
+  const randomname = crypto.randomUUID()
+  const namesfile = image.map((file) => `school/${randomname}-${file.name}`);
     console.log(namesfile)
 
   const { error } = await supabase.schema("sekolah").from("assignment").insert({
@@ -30,6 +31,6 @@ export async function addassignment(formdata) {
     const fileName = `${crypto.randomUUID()}-${file.name}`;
     const { error: imageerror } = await supabase.storage
       .from("school")
-      .upload(`school/${fileName}`,file);
+      .upload(`school/${randomname}-${file.name}`,file);
   }
 }

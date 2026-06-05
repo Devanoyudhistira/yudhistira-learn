@@ -1,12 +1,17 @@
 import Dashboardcard from "@/app/components/teacher/dashboardcard";
 import Navbar from "@/app/components/teacher/navbar";
+import { teacherdata } from "@/app/lib/user";
 import supabase from "@/app/supabase/supabase";
 import { Inter } from "next/font/google";
 import { Search } from "react-bootstrap-icons";
 const inter = Inter({})
-export default async function Page() {    
+export default async function Page() {
+    const teacher = await teacherdata()
+    const { data: siswa } = await supabase.schema("sekolah").from("students").select("*")
+    const { data: tugas } = await supabase.schema("sekolah").from("assignment").select("*").eq("subject",teacher.subject)
+    console.log(tugas)
     return (
-        <main className={`${inter.className}`} >
+        <main className={`${inter.className}`}>
             <Navbar />
             <div className="w-full px-2 flex flex-col gap-2">
                 <div className="flex items-center bg-gray-50  shadow-black/20 mt-3" >
@@ -18,10 +23,7 @@ export default async function Page() {
                         <h1 className="text-2xl font-semibold" > Dashboard Siswa </h1>
                         <h1 className="text-2xl capitalize text-blue-600 font-semibold" > X-tkj A </h1>
                     </div>
-                    <Dashboardcard/>
-                    <Dashboardcard/>
-                    <Dashboardcard/>
-                    <Dashboardcard/>
+                    {siswa.map(e =><Dashboardcard key={e.id} studentid={e.id} assignmentlist={tugas} studentname={e.name} /> )}
                 </div>
 
             </div>

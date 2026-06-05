@@ -8,7 +8,7 @@ import supabase from "@/app/supabase/supabase";
 
 export default async function Page() {
 
-    const { data: semuasiswa } = await supabase.schema("sekolah").from("students").select("*,attendance_id(*)").eq("class", 6)        
+    const { data: semuasiswa } = await supabase.schema("sekolah").from("students").select("*,attendance_id(*)").eq("class", 4)        
     return (
         <main className="w-screen flex flex-col" >
             <Navbar />
