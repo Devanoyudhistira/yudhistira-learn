@@ -3,8 +3,9 @@ import { useState } from "react"
 import Assignmentlist from "./assignmentlist"
 import { Alarm } from "react-bootstrap-icons"
 import moment from "moment"
-export default function Assignmentpage({ data }) {
-    console.log(data)
+export default function Assignmentpage({ data,completeddata }) {
+    const closesttask = data.filter(e => moment(e.deadline).isAfter(moment(), "day"))
+    console.log(closesttask)
     const [filterstatus, setfilterstatus] = useState("all")    
     return <>
         <div className="flex items-center justify-evenly mt-5 gap-4 w-full px-6" >
@@ -26,12 +27,12 @@ export default function Assignmentpage({ data }) {
         </div>
         <div className="w-full flex justify-between text-md px-6 mt-5.5" >
             <span className="font-light text-gray-700 capitalize" >Prioritas utama</span>
-            <span className="flex items-center gap-2 text-red-600 font-normal" > <Alarm /> dikumpulkan hari ini</span>
+            <span className="flex items-center gap-2 text-red-600 font-normal" > <Alarm /> dikumpulkan segera</span>
         </div>
         <div className="mt-3 px-4 w-[90%] h-max py-6 flex flex-col bg-linear-to-t shadow-xl shadow-blue-600/50 from-blue-600 to-blue-800 rounded-3xl " >
-            <h3 className="text-white w-max  rounded-full text-xs tracking-wider font-medium uppercase p-1.5 bg-gray-50/30" > {data[0].subject} </h3>
-            <h1 className="text-3xl mt-1 font-light capitalize text-white" > {data[0].name} </h1>
-            <h2 className="text-md font-light text-white  " > Dikumpulkan {moment(data[0].deadline).locale("id").fromNow(true)} lagi </h2>
+            <h3 className="text-white w-max  rounded-full text-xs tracking-wider font-medium uppercase p-1.5 bg-gray-50/30" > {closesttask[0].subject} </h3>
+            <h1 className="text-3xl mt-1 font-light capitalize text-white" > {closesttask[0].name} </h1>
+            <h2 className="text-md font-light text-white  " > Dikumpulkan {moment(closesttask[0].deadline).locale("id").fromNow(true)} lagi </h2>
         </div>
         <div className="w-full px-4 mt-5" >
             <h5 className="text-xl font-medium text-gray-800 capitalize" > Upcoming task </h5>
@@ -40,13 +41,14 @@ export default function Assignmentpage({ data }) {
                     if (moment(e.deadline).isAfter(moment()) ) return true
                 })
                     .filter((e) => {
-                        if (filterstatus === "all") return true
-                        return e.status === filterstatus
+                        if (filterstatus === "all") return true                        
+                        else if(filterstatus === "pending") !completeddata.some(e => e?.assignment_id === e.id)
+                        else completeddata.some(e => e?.assignment_id === e.id)
                     })
                     .map((e) => (
                         <Assignmentlist
                             key={e.id}
-                            status={e.status}
+                            status={completeddata}
                             tanggal={e.deadline}
                             tugas={e.name}
                             description={e.description}
@@ -54,6 +56,7 @@ export default function Assignmentpage({ data }) {
                             mapel={e.subject}
                             taskstatus="active"
                             id={e.id}
+                            late={false}
                         />
                     ))}
             </div>
@@ -63,12 +66,12 @@ export default function Assignmentpage({ data }) {
             <div className="w-full flex flex-col mt-2 items-center gap-3" >
                 {data
                     .filter((e) => {
-                        if (moment(e.deadline).diff(moment(), "day") === 0 ) return true
+                        if (moment(e.deadline).isBefore(moment(), "day")) return true
                     })
                     .map((e) => (
                         <Assignmentlist
                             key={e.id}
-                            status={e.status}
+                            status={completeddata}
                             tanggal={e.deadline}
                             tugas={e.name}
                             description={e.description}
@@ -76,6 +79,7 @@ export default function Assignmentpage({ data }) {
                             mapel="b ind"
                             taskstatus="done"
                             id={e.id}
+                            late={true}
                         />
                     ))}
             </div>

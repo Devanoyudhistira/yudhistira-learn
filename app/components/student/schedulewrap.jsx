@@ -24,8 +24,8 @@ export default function Schedulewrap({ data }) {
                     <>
                         <div key={e.id} className="w-[96%] h-36 flex flex-col bg-zinc-50 shadow-md px-2 py-1.5 border border-gray-500 shadow-black/40 rounded-2xl" >
                             <h1 className="text-md font-bold px-2 py-1 rounded-full bg-blue-400 text-blue-700 w-max " > {e.time_start.slice(0, 5)} - {e.time_end.slice(0, 5)} </h1>
-                            <h2 className="text-2xl mt-10 font-medium capitalize" > {e.name} </h2>
-                            <h3 className="text-md font-light capitalize" > {e.teacher.name} </h3>
+                            <h2 className="text-2xl mt-10 font-medium capitalize" > {e?.name} </h2>
+                            <h3 className="text-md font-light capitalize" > {e?.teacher?.name} </h3>
                         </div>
                         {e.time_end.slice(0, 5) === "11:30" &&
                             <Breakschedule breakname={"istirahat sholat & makan"} breaktime={"11:30 - 13:00"} />

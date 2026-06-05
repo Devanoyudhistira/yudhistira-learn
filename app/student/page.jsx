@@ -13,6 +13,7 @@ import supabase from "../supabase/supabase"
 import { createClient } from "../supabase/server"
 import moment from "moment"
 import { studentdata } from "../lib/user"
+import truncate from "../function/truncat"
 
 const jakarta = Plus_Jakarta_Sans({})
 const inter = Inter({})
@@ -21,7 +22,7 @@ export default async function Page() {
     const studentdatalo = await studentdata()
     const { data, error } = await supabase.schema("sekolah").from("assignment").select("*,teacher_id(name)").order("deadline", { ascending: true }).limit(3)
     const { data: attandance, error: attandanceerror } = await supabase.schema("sekolah").from("attendance").select("*").eq("student_id", studentdatalo.id)
-    const datedeadline = data.filter(e => moment(e.deadline).isSame(moment().add(1, "day"), "day"))
+    const datedeadline = data.filter(e => moment(e.deadline).isAfter(moment().add(1, "day"), "day"))
 
     console.log(datedeadline)
     return (
@@ -34,7 +35,7 @@ export default async function Page() {
                 </div>}
                 {datedeadline[0]?.name ?
                     <>
-                        <h1 className="text-5xl font-semibold tracking-wide text-zinc-50" > {datedeadline[0]?.name} </h1>
+                        <h1 className="text-5xl font-semibold tracking-wide text-zinc-50" > {truncate(datedeadline[0]?.name,18 )} </h1>
                         <h3 className="text-xl font-medium text-zinc-50 capitalize " > {datedeadline[0]?.subject} |  {datedeadline[0]?.teacher_id.name} </h3>
                         <div className="flex w-full mt-4 h-max  justify-center items-center shrink py-2 self-center mr-14 gap-8 ">
                             <div className="w-full h-22 ml-13 shrink-0 self-center rounded-2xl bg-zinc-200/50 flex flex-col items-center justify-center" >
@@ -47,7 +48,7 @@ export default async function Page() {
             <div className={"flex flex-col mt-6 h-max items-center w-full gap-3 px-4 " + inter.className} >
                 <h1 className="text-xl self-start font-medium text-gray-900" > Recent assignments </h1>
                 {data.map(e =>
-                    <Assignmentlist key={e.id} tanggal={e.deadline} tugas={e.name} description={e.description} namaguru={e.teacher_id.name} mapel={"b ind"} />
+                    <Assignmentlist key={e.id} id={e.id} tanggal={e.deadline} tugas={e.name} description={e.description} namaguru={e.teacher_id.name} mapel={"b ind"} />
                 )}
             </div>
             <div className="w-full mt-8 px-6 flex-col flex gap-1" >

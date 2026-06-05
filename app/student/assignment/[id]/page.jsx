@@ -4,6 +4,8 @@ import moment from "moment"
 import { Inter } from "next/font/google"
 import { AlarmFill } from "react-bootstrap-icons"
 import { Alarm } from "react-bootstrap-icons"
+import { assignmentsubmit } from "@/app/action/student/assignment"
+import Submitform from "@/app/components/student/submitform"
 
 const inter = Inter({})
 
@@ -11,7 +13,7 @@ export default async function page({ params }) {
     const { id } = await params
     const {data} = await supabase.schema("sekolah").from("assignment").select("*,teacher_id(name,subject)").eq("id",id).single()
     return (
-        <main className={"w-screen " + inter.className} >
+        <main className={"w-screen flex flex-col pb-10 " + inter.className} >
             <Navbar />
             <h1 className="text-3xl font-semibold px-2 mt-4">
                 {data.name}
@@ -33,15 +35,18 @@ export default async function page({ params }) {
                     </div>
                     <div className="flex flex-col gap-1 justify-center" >
                         <span className="text-xl font-bold text-red-600 uppercase" > Deadline </span>
-                        <span className="text-xl font-bold text-gray-950 capitalize" > {moment(data.deadline).diff(moment().subtract(1, "day"),"day") } </span>
+                        <span className="text-xl font-bold text-gray-950 capitalize" > {moment(data.deadline).diff(moment().subtract(1, "day"),"day") } hari lagi </span>
                     </div>
                 </div>
             </div>
 
-            <article className="mt-3 px-3 " >
+            <article className="mt-3 w-[95%] h-50 overfloxw-y-scroll scroll-smooth overflow-x-hidden self-center bg-gray-200 rounded-xl px-5 py-4" >
                 <h1 className="text-3xl font-extrabold capitalize" > Description </h1>
-                <p className="text-xl font-light text-black mt-4" > {data.description}</p>
+                <p className="text-md font-light text-black mt-1.5 pb-2" > 
+                    {data.description}                     
+                    </p>
             </article>
+            <Submitform action={assignmentsubmit.bind(null,id)} />            
         </main>
 
     )

@@ -11,10 +11,12 @@ const inter = Inter({})
 export default async function Page() {
     const student = await studentdata()
     const { data, error } = await supabase.schema("sekolah").from("assignment").select("*,teacher_id(name)").eq("class",student.class).order("deadline", { ascending: true })    
+    const { data:completed,error:completederror} = await supabase.schema("sekolah").from("completed_assignment").select("assignment_id").eq("student_id",student.id)
+    console.log(completed)
     return (
         <main className={"w-screen h-100 flex flex-col items-center bg-sky-100/20 " + inter.className} >
             <Navbar />
-            <Assignmentpage data={data} />
+            <Assignmentpage completeddata={completed} data={data} />
         </main>
     )
 }

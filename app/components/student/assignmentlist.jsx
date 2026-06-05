@@ -4,8 +4,9 @@ import Link from "next/link"
 import { ChevronRight } from "react-bootstrap-icons"
 import { Stopwatch } from "react-bootstrap-icons"
 
-export default function Assignmentlist({ tugas, namaguru, mapel, description, tanggal, status, taskstatus,id }) {
+export default function Assignmentlist({ tugas, namaguru, mapel, description, tanggal, status, taskstatus, id, late }) {
     const deadline = moment(tanggal).diff(moment(), "days")
+    const condition = status.some(e => e?.assignment_id === id)
     return (
         <Link className="w-[83%] h-60 flex flex-col gap-3  justify-start items-start px-4 py-2 shadow-md shadow-black/10 rounded-2xl" href={`/student/assignment/${id}`} >
             <div  >
@@ -23,7 +24,14 @@ export default function Assignmentlist({ tugas, namaguru, mapel, description, ta
                 <h1 className="font-light text-xl text-gray-950" >  {truncate(tugas, 35)} </h1>
                 <p className="text-md font-light text-gray-500" > {truncate(description, 50)} </p>
                 <div className=" flex justify-start items-center h-15" >
-                    {!moment(tanggal).isAfter(moment()) && status !== "completed" ? <h1 className="text-red-700 text-md font-bold uppercase" > failed </h1> : <h1 className="text-green-400 text-md font-bold uppercase" > {status} </h1>}
+                    {
+                        !late && (
+                            !condition
+                                ? <h1 className="text-yellow-400 text-md font-bold uppercase">pending</h1>
+                                : <h1 className="text-green-400 text-md font-bold uppercase">completed</h1>
+                        )
+                    }
+                    {condition || late && <h1 clsubassName="text-red-700 text-md font-bold uppercase" > failed </h1>}
                 </div>
             </div>
         </Link>
