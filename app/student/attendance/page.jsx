@@ -4,14 +4,15 @@ import { createClient } from "@/app/supabase/server";
 import supabase from "@/app/supabase/supabase";
 import moment from "moment";
 import { Inter } from "next/font/google";
+import Link from "next/link";
 import { Calendar2 } from "react-bootstrap-icons";
 const poppins = Inter({})
 export default async function Page() {
     const supabaseauth = await createClient()
-   const {data:usedata} = await supabaseauth.auth.getUser()
-   const studentid = usedata.user.id
-   const {data:studentdata} = await supabase.schema("sekolah").from("students").select("*").eq("email",studentid).single()
-    const { data } = await supabase.schema("sekolah").from("attendance").select("*").eq("student_id",studentdata.id)
+    const { data: usedata } = await supabaseauth.auth.getUser()
+    const studentid = usedata.user.id
+    const { data: studentdata } = await supabase.schema("sekolah").from("students").select("*").eq("email", studentid).single()
+    const { data } = await supabase.schema("sekolah").from("attendance").select("*").eq("student_id", studentdata.id)
     return (
         <main className={"w-screen flex flex-col items-center " + poppins.className} >
             <Navbar />
@@ -23,27 +24,37 @@ export default async function Page() {
                 <div className="w-full self-end justify-self-end px-4 flex justify-evenly items-center  gap-3" >
                     <div className="flex w-25 h-20 p-4 rounded-3xl bg-gray-100/10 items-center justify-center gap-14" >
                         <div className="flex flex-col items-center justify-center" >
-                            <h2 className="text-2xl font-bold text-white" > {data.filter(e => e.category === "bolos").length } </h2>
+                            <h2 className="text-2xl font-bold text-white" > {data.filter(e => e.category === "bolos").length} </h2>
                             <h4 className="text-xl text-red-600 font-medium" > alfa </h4>
                         </div>
                     </div>
                     <div className="flex w-25 h-20 p-4 rounded-3xl bg-gray-100/10 items-center justify-center gap-14" >
                         <div className="flex flex-col items-center justify-center" >
-                            <h2 className="text-2xl font-bold text-white" > {data.filter(e => e.category === "izin").length } </h2>
+                            <h2 className="text-2xl font-bold text-white" > {data.filter(e => e.category === "izin").length} </h2>
                             <h4 className="text-xl text-sky-300 font-medium" > izin </h4>
                         </div>
                     </div>
                     <div className="flex w-25 h-20 p-4 rounded-3xl bg-gray-100/10 items-center justify-center gap-14" >
                         <div className="flex flex-col items-center justify-center" >
-                            <h2 className="text-2xl text-white font-bold" > {data.filter(e => e.category === "sakit").length } </h2>
+                            <h2 className="text-2xl text-white font-bold" > {data.filter(e => e.category === "sakit").length} </h2>
                             <h4 className="text-xl text-green-400 font-medium" > sakit </h4>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div className="w-full px-5 flex flex-col justify-center gap-4 mt-5" >
+                <h1 className="text-xl font-semibold capitalize " > ketik disini jika ingin izin tidak masuk  </h1>
+                <div className="w-full flex justify-center items-center gap-4"  >
+                    <Link href={"/student/attendance/medical"} prefetch={true} className="text-xl w-max px-2 rounded-2xl text-center py-1 font-bold text-white bg-emerald-300" >
+                        izin sakit
+                    </Link>
+                    <Link href={"/student/attendance/personal"} prefetch={true} className="text-xl w-max px-2 rounded-2xl text-center py-1 font-bold text-white bg-yellow-300" >izin urusan keluarga</Link>
+                </div>
+            </div>
+
             <div className=" mt-4 w-full flex flex-col px-4" >
-                {data.map((e,index) => {
+                {data.map((e, index) => {
                     const currentMonth = moment(e.created_at).format("MMM");
                     const previousMonth = data[index - 1]
                         ? moment(data[index - 1].created_at).format("MMM")
