@@ -16,8 +16,7 @@ export async function assignmentsubmit(id, formdata) {
       "." +
       extension;
     return `${finalname}`;
-  });
-  console.log(namesfile);
+  });  
   const { data, error } = await supabase
     .schema("sekolah")
     .from("completed_assignment")

@@ -9,8 +9,14 @@ export async function medicalrequest(formdata) {
   const excuse = formdata.get("excuses");
   const description = formdata.get("description");
   const image = formdata.get("image");
-  const randomname = crypto.randomUUID();
-  const namafile = `school/${randomname}-${image.name}`;
+  const extension = image.name.split(".").at(-1);
+  const finalname =
+    Math.random()
+      .toString(36)
+      .substring(2, 10 + 2) +
+    "." +
+    extension;
+
   const { error } = await supabase
     .schema("sekolah")
     .from("attendance")
@@ -20,12 +26,12 @@ export async function medicalrequest(formdata) {
       category: "sakit",
       absent_date: moment().format("YYYY-MM-DD"),
       description: description,
-      proof_image: `school/${namafile}`,
+      proof_image: `school/${finalname}`,
     });
 
   const { error: imageerror } = await supabase.storage
     .from("school")
-    .upload(`school/${namafile}`, image);
+    .upload(`school/${finalname}`, image);
 
   console.log(error);
 }
@@ -35,8 +41,14 @@ export async function personalrequest(formdata) {
   const excuse = formdata.get("excuses");
   const description = formdata.get("description");
   const image = formdata.get("image");
-  const randomname = crypto.randomUUID();
-  const namafile = `school/${randomname}-${image.name}`;
+  const extension = image.name.split(".").at(-1);
+  const finalname =
+    Math.random()
+      .toString(36)
+      .substring(2, 10 + 2) +
+    "." +
+    extension;
+
   const { error } = await supabase
     .schema("sekolah")
     .from("attendance")
@@ -46,11 +58,11 @@ export async function personalrequest(formdata) {
       category: "izin",
       absent_date: moment().format("yyyy-mm-hh"),
       description: description,
-      proof_image: `school/${namafile}`,
+      proof_image: `school/${finalname}`,
     });
   const { error: imageerror } = await supabase.storage
     .from("school")
-    .upload(`school/${namafile}`, image);
+    .upload(`school/${finalname}`, image);
 
   console.log(imageerror);
   console.log(error);
