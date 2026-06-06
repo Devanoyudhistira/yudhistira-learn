@@ -2,6 +2,7 @@
 
 import { studentdata } from "@/app/lib/user";
 import supabase from "@/app/supabase/supabase";
+import { redirect } from "next/navigation";
 
 export async function assignmentsubmit(id, formdata) {
   const student = await studentdata();  
@@ -33,8 +34,8 @@ export async function assignmentsubmit(id, formdata) {
 
     const { data:imagedata, error: imageerror } = await supabase.storage
       .from("school")
-      .upload(`${namesfile[i]}`, file);
-
-    console.log(i);
+      .upload(`${namesfile[i]}`, file);    
   }
+  redirect("/student/assignment")
+
 }

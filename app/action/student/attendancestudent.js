@@ -3,7 +3,7 @@
 import { studentdata } from "@/app/lib/user";
 import supabase from "@/app/supabase/supabase";
 import moment from "moment";
-
+import { redirect } from "next/navigation";
 export async function medicalrequest(formdata) {
   const studentuser = await studentdata();
   const excuse = formdata.get("excuses");
@@ -34,6 +34,7 @@ export async function medicalrequest(formdata) {
     .upload(`school/${finalname}`, image);
 
   console.log(error);
+  redirect("/student/attendance");
 }
 
 export async function personalrequest(formdata) {
@@ -66,4 +67,5 @@ export async function personalrequest(formdata) {
 
   console.log(imageerror);
   console.log(error);
+  redirect("/student/attendance");
 }

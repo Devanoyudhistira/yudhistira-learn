@@ -38,9 +38,9 @@ export async function addassignment(formdata) {
 
     const { data: imagedata, error: imageerror } = await supabase.storage
       .from("school")
-      .upload(`${namesfile[i]}`, file);
-    
+      .upload(`${namesfile[i]}`, file);    
   }
+  
 }
 
 export async function updatereview(id, formdata) {
@@ -54,8 +54,5 @@ export async function updatereview(id, formdata) {
       rating: rating,
       corrected: true,
     })
-    .eq("id", id);
-  console.log(error);
-  console.log(id);
-  console.log(rating);
+    .eq("id", id); 
 }
