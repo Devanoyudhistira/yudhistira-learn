@@ -17,8 +17,22 @@ export default async function Page({ params }) {
                     <input type="search" placeholder="cari murid anda" className="h-15 w-full text-2xl font-medium text-gray-700 placeholder:capitalize bg-transparent" />
                 </div>
                 <div className="flex flex-col gap-3 w-full mt-3 items-center justify-center px-3 " >
-                    {allstudent.map((e, i) =>
-                        <Studentcard name={e.name} image={e.gambar} key={e.id} status={studentassignment.some(j => j.id === e.id)} value={studentassignment.some(j => j.id === e.id) ? completed[i]?.rating : 0} />)}
+                    {allstudent.map((e) => {
+                        const completedStudent = completed.find(
+                            (c) => c
+                        );
+
+                        return (
+                            <Studentcard
+                                key={e.id}
+                                name={e.name}
+                                image={e.gambar}
+                                status={studentassignment.some(j => j.id === e.id)}
+                                id={completedStudent?.id}
+                                value={completedStudent?.rating ?? 0}
+                            />
+                        );
+                    })}
                 </div>
             </div>
         </main>

@@ -9,12 +9,12 @@ export default function Assignmentlist({ tugas, namaguru, mapel, description, ta
     const condition = status.some(e => e?.assignment_id === id)
     return (
         <Link className="w-[83%] h-60 flex flex-col gap-3  justify-start items-start px-4 py-2 shadow-md shadow-black/10 rounded-2xl" href={`/student/assignment/${id}`} >
-            <div  >
-                <div className="w-full flex  justify-between items-center" >
+            <div className="w-full px-1.5" >
+                <div className="w-full flex justify-between items-center" >
                     {moment(tanggal).isAfter(moment()) ? <div className="text-yellow-600 text-4xl bg-yellow-100 rounded-2xl p-3 flex items-center justify-center " > <Stopwatch />
                     </div> : <div className="text-gray-500 text-4xl bg-gray-100 rounded-2xl p-3 flex items-center justify-center " > <Stopwatch />
                     </div>}
-                    <div className="flex flex-col text-right gap-2" >
+                    <div className="w-full flex flex-col text-right gap-2" >
                         <h4 className="text-gray-600 font-bold uppercase text-xs" > Deadline </h4>
                         <h1 className="tracking-wider capitalize text-xl text-red-600 font-bold" >
                             {moment(tanggal).format("MMM DD, YYYY")}
