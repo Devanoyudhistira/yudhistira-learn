@@ -18,7 +18,7 @@ export default function Assignmentreview({ data }) {
                 )}
             </div>
             <div className="w-full h-70 mt-4 rounded-2xl" >
-                <Image alt={imagepreview} width={400} height={400} className="object-center object-cover w-full h-full" src={`https://bmqqribeuxnppfcxittg.supabase.co/storage/v1/object/public/school/school/${imagepreview}`} />
+                <Image alt={imagepreview} width={400} height={400} className="object-center object-cover w-full h-full" src={`https://bmqqribeuxnppfcxittg.supabase.co/storage/v1/object/public/school/${imagepreview}`} />
             </div>
         </div>
     )
