@@ -104,7 +104,7 @@ export default function Home() {
         </div>
       </section>
       <footer className="w-screen h-20 flex items-center justify-center border-gray-100 border-t-2" >
-        <span className="text-md font-semibold text-gray-500" > © 2024 Severna Private School. All rights reserved.</span>
+        <span className="text-md font-semibold text-gray-500" > © 2024 Devano Private School. All rights reserved.</span>
       </footer>
     </main>
   );
