@@ -5,13 +5,33 @@ import { Trophy } from "react-bootstrap-icons";
 import { GraphUp } from "react-bootstrap-icons";
 import { Tree } from "react-bootstrap-icons";
 import { BookHalf } from "react-bootstrap-icons";
+import { studentdata } from "./lib/user";
+import { createClient } from "./supabase/server";
+import Link from "next/link";
 const plusjakarta = Plus_Jakarta_Sans()
 const inter = Inter({})
-export default function Home() {
+
+
+
+export default async function Home() {
+  const supabaseauth = await createClient()
+  const { data: user } = await supabaseauth.auth.getUser()
+  let idendity = null
+  async function dashboard() {
+    if (user.user) {
+      let student = await studentdata()
+      if (student) {
+        return "/student"
+      }
+      else { return "/teacher" }
+    }
+    return "/login"
+  }
   return (
     <main className="w-screen h-max overflow-x-hidden">
-      <nav className="flex w-full px-3 py-1 justify-between items-center" >
-        <h1 className={`text-xl font-bold uppercase text-blue-600 ${plusjakarta.className}`} > DevanoSchool </h1>
+      <nav className={"flex w-full px-3 py-1 justify-between items-center " + plusjakarta.className} >
+        <h1 className={`text-xl font-bold uppercase text-blue-600`} > DevanoSchool </h1>
+        {user.user ? <Link href={await dashboard()} className="bg-blue-500  px-3.5 py-1 rounded-md shadow-md shadow-blue-800/50 font-semibold tracking wider text-md" > see dashboard</Link> : <Link href={await dashboard()} className="bg-blue-50 border border-blue-600  px-3.5 py-1 rounded-md shadow-md shadow-blue-800/50 font-semibold tracking wider text-xl" > Login </Link>}
       </nav>
       <header className={`w-full h-max px-2 pb-10  mt-4 ${inter.className} flex flex-col gap-3 items-center `} >
         <h1 className={`text-4xl px-3 capitalize tracking-wider ${inter.className} font-bold text-center`} >
