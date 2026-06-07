@@ -3,6 +3,8 @@ import Navbar from "@/app/components/teacher/navbar";
 import supabase from "@/app/supabase/supabase";
 import { createClient } from "@/app/supabase/server";
 import { Inter } from "next/font/google";
+import { Plus } from "react-bootstrap-icons";
+import Link from "next/link";
 
 const inter = Inter({})
 
@@ -21,6 +23,10 @@ export default async function Page() {
                 {data.map(e =>
                     <Assignmentcard key={e.id} id={e.id} subject={e.subject} title={e.name} deadline={e.deadline} alreadysubmit={completed.length} expectation={e.submission_target} assignmentclass={e["class"]["class"]} />
                 )}
+                <Link href={"assignment/create"} className="w-full h-35 border-2 border-dashed border-blue-950 rounded-xl flex flex-col gap-2 items-center justify-center " >
+                    <h1 className="p-3 text-4xl text-blue-950 border-2 border-blue-600 flex items-center justify-center rounded-full" > <Plus /> </h1>
+                    <h1 className="text-2xl font-semibold text-blue-400 tracking-wide"   > Buat tugas baru </h1>
+                </Link>
             </div>
         </div>
     </main>)

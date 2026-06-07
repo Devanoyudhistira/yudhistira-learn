@@ -11,7 +11,7 @@ export default async function Navbar() {
             <div className="flex items-center justify-center gap-3 " >
                 <h1 className="text-2xl font-semibold " > {(await studentdata()).name} </h1>
                 <div className="w-10 flex items-center justify-center font-extrabold  bg-sky-100/50 h-10 text-xl rounded-full border-2 border-blue-500" >
-                    L
+                    {(await studentdata()).name.split("")[0] }
                 </div>
             </div>
         </nav>
