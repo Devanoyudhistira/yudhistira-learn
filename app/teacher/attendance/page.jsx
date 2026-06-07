@@ -15,7 +15,7 @@ export default async function Page() {
             <div className={"w-full px-2 py-1 flex flex-col gap-1.5 " + jakarta.className} >
                 <h5 className="text-xl font-semibold text-blue-500 uppercase " > Daftar kehadiran </h5>
                 <div className="w-full flex items-center justify-between" >
-                    <h1 className="text-2xl font-bold " > Tkj-a </h1>
+                    <h1 className="text-2xl font-bold uppercase" > 7A </h1>
                     <h2 className="text-xl font-medium bg-gray-300 px-2 py-1 rounded-full" > {semuasiswa.length} murid </h2>
                 </div>
                 <h3 className=" text-xl font-normal tracking-wide flex items-center gap-2" > <Calendar2 /> {moment().locale("ID").format("MMM h,YYYY")} </h3>

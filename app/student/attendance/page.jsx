@@ -5,6 +5,9 @@ import supabase from "@/app/supabase/supabase";
 import moment from "moment";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import { Suitcase2 } from "react-bootstrap-icons";
+import { Suitcase } from "react-bootstrap-icons";
+import { BagPlus } from "react-bootstrap-icons";
 import { Calendar2 } from "react-bootstrap-icons";
 const poppins = Inter({})
 export default async function Page() {
@@ -43,13 +46,18 @@ export default async function Page() {
                 </div>
             </div>
 
-            <div className="w-full px-5 flex flex-col justify-center gap-4 mt-5" >
-                <h1 className="text-xl font-semibold capitalize " > ketik disini jika ingin izin tidak masuk  </h1>
+            <div className="w-[95%] self-center py-2 shadow-2xl shadow-black/20 px-5 flex flex-col justify-center gap-4 mt-5" >
                 <div className="w-full flex justify-center items-center gap-4"  >
-                    <Link href={"/student/attendance/medical"} prefetch={true} className="text-xl w-max px-2 rounded-2xl text-center py-1 font-bold text-white bg-emerald-300" >
-                        izin sakit
+                    <Link href={"/student/attendance/medical"} prefetch={true} className=" w-[50%] h-35 px-2 rounded-2xl py-1 font-bold border border-gray-400 text-black bg-zinc-50" >
+                        <h1 className="p-3 rounded-full w-max bg-green-200" > <BagPlus className="text-green-500 text-3xl" /> </h1>
+                        <h1 className="text-md font-medium mt-1.5" > Izin sakit </h1>
+                        <p className="text-xs font-normal" > kirimkan permintaan tidak masuk karena sakit </p>
                     </Link>
-                    <Link href={"/student/attendance/personal"} prefetch={true} className="text-xl w-max px-2 rounded-2xl text-center py-1 font-bold text-white bg-yellow-300" >izin urusan keluarga</Link>
+                    <Link href={"/student/attendance/personal"} prefetch={true} className=" w-[50%] h-35 px-2 rounded-2xl py-1 font-bold border border-gray-400 bg-zinc-50" >
+                        <h1 className="p-2 rounded-full w-max bg-yellow-200" > <Suitcase2 className="text-yellow-500 text-3xl" /> </h1>
+                        <h1 className="text-md w-max font-medium mt-1.5" > Izin urusan keluarga </h1>
+                        <p className="text-xs font-normal" > kirimkan permintaan tidak masuk untuk urusan pribadi </p>
+                    </Link>
                 </div>
             </div>
 

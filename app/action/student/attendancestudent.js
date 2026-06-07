@@ -17,7 +17,7 @@ export async function medicalrequest(formdata) {
     "." +
     extension;
 
-  const { error } = await supabase
+  const { error,data } = await supabase
     .schema("sekolah")
     .from("attendance")
     .insert({
@@ -27,7 +27,12 @@ export async function medicalrequest(formdata) {
       absent_date: moment().format("YYYY-MM-DD"),
       description: description,
       proof_image: `school/${finalname}`,
-    });
+    }).select("id,student_id").single() ;
+
+    const {error:studentattendanceerror} = await supabase.schema("sekolah").from("students").update({
+      attendance_id:data.student_id
+    }).eq("id",data.student_id)
+    console.log(studentattendanceerror)
 
   const { error: imageerror } = await supabase.storage
     .from("school")

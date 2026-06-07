@@ -21,7 +21,7 @@ export default async function Page() {
                 <div className="w-full gap-3 px-2 flex flex-col items-center" >
                     <div className="w-full flex justify-between items-center " >
                         <h1 className="text-2xl font-semibold" > Dashboard Siswa </h1>
-                        <h1 className="text-2xl capitalize text-blue-600 font-semibold" > X-tkj A </h1>
+                        <h1 className="text-2xl capitalize text-blue-600 font-semibold" > 7A </h1>
                     </div>
                     {siswa.map(e =><Dashboardcard key={e.id} studentid={e.id} assignmentlist={tugas} studentname={e.name} /> )}
                 </div>
